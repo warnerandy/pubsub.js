@@ -22,6 +22,69 @@
 			//help minification
 			funcType = Function;
 
+			//return array of channels to publish to
+			function getChannels(channel) {
+				var paths = [];
+
+				if ( channels.hasOwnProperty( channel ) ) {
+					paths.push[ channel ];
+				}
+
+				var chanPath = channel.split('/')
+				// remove blank
+				if (chanPath[0] === ''){
+					chanPath.shift();
+				}
+
+				/* double star (match all terms for that section and after)
+				 * i.e. /some/**
+				 * would match /some/path/goes/here
+				 * but not /something/else
+				 */
+				var path = "";
+				if ( channels.hasOwnProperty( path + '/**' ) ) {
+					paths.push[ channels[path + '/**'] ]
+				}
+				while(chanPath.length > 0) {
+					path += '/' + chanPath.shift();
+					if ( channels.hasOwnProperty( path + '/**' ) ) {
+						paths.push[channels[path + '/**']]
+					}
+				}
+
+				// single star (match all terms for that section)
+				// i.e. /some/*/goes/here
+				// would match /some/path/here
+				// but not match /some/path
+				// or /some/path/went/here
+				
+				var chanPath = channel.split('/')
+				// remove blank
+				if (chanPath[0] === ''){
+					chanPath.shift();
+				}
+				for (var i = 0; i < chanPath.length; i++) {
+					var tmpPath = '/';
+					//build full term with star replacing the current section to check
+					for (var x = 0; x < chanPath.length; x++) {
+						if (i === x) {
+							tmpPath += '*';
+						}
+						else {
+							tmpPath += chanPath[x];
+						}
+						//dont add trailing slash to the path
+						if (x < (chanPath.length - 1)){
+							tmpPath += '/';
+						}
+					}
+					if ( channels.hasOwnProperty( tmpPath ) ) {
+						paths.push[ tmpPath ]
+					}
+				}
+				return paths
+			}
+
 		return {
 			/*
 			 * @public
@@ -45,7 +108,7 @@
 				//help minification
 				var args = arguments,
 					// args[0] is the channel
-					subs = channels[args[0]],
+					subs = getChannels[args[0]],
 					len,
 					params,
 					x;
