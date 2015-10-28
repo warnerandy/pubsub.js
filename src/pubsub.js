@@ -57,7 +57,7 @@
 				// would match /some/path/here
 				// but not match /some/path
 				// or /some/path/went/here
-				
+
 				var chanPath = channel.split('/')
 				// remove blank
 				if (chanPath[0] === ''){
@@ -82,6 +82,10 @@
 						paths.push[ tmpPath ]
 					}
 				}
+
+                if (channels.hasOwnProperty(channel)) {
+                    paths.push(channels[channel]);
+                }
 				return paths
 			}
 
@@ -108,10 +112,9 @@
 				//help minification
 				var args = arguments,
 					// args[0] is the channel
-					subs = getChannels[args[0]],
+					subs = getChannels(args[0]),
 					len,
-					params,
-					x;
+					params;
 
 				if (subs) {
 					len = subs.length;
@@ -124,8 +127,10 @@
 						function () {
 							//executes callbacks in the order
 							//in which they were registered
-							for (x = 0; x < len; x += 1) {
-								subs[x].apply(context, params);
+							for (var chanIter = 0; chanIter < len; chanIter += 1) {
+                                for (var fnIter = 0; fnIter < subs[chanIter].length; fnIter++) {
+								    subs[chanIter][fnIter].apply(context, params);
+                                }
 							}
 
 							//clear references to allow garbage collection
