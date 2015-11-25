@@ -27,7 +27,7 @@
 				var paths = [];
 
 				if ( channels.hasOwnProperty( channel ) ) {
-					paths.push[ channel ];
+					paths.push( channel );
 				}
 
 				var chanPath = channel.split('/')
@@ -43,7 +43,7 @@
 				 */
 				var path = "";
 				if ( channels.hasOwnProperty( path + '/**' ) ) {
-					paths.push[ channels[path + '/**'] ]
+					paths.push( channels[path + '/**'] )
 				}
 				while(chanPath.length > 0) {
 					path += '/' + chanPath.shift();
@@ -79,7 +79,7 @@
 						}
 					}
 					if ( channels.hasOwnProperty( tmpPath ) ) {
-						paths.push[ tmpPath ]
+						paths.push( tmpPath )
 					}
 				}
 
