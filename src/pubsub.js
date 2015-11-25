@@ -48,7 +48,7 @@
 				while(chanPath.length > 0) {
 					path += '/' + chanPath.shift();
 					if ( channels.hasOwnProperty( path + '/**' ) ) {
-						paths.push[channels[path + '/**']]
+						paths.push(channels[path + '/**'])
 					}
 				}
 
@@ -120,6 +120,7 @@
 					len = subs.length;
 					params = (args.length > 1) ?
 							Array.prototype.splice.call(args, 1) : [];
+					params.push(args[0].split('/'))
 
 					//run the callbacks asynchronously,
 					//do not block the main execution process
