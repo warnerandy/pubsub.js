@@ -120,6 +120,7 @@
 					len = subs.length;
 					params = (args.length > 1) ?
 							Array.prototype.splice.call(args, 1) : [];
+					params.push(args[0])
 					params.push(args[0].split('/'))
 
 					//run the callbacks asynchronously,
