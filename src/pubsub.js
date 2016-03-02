@@ -26,9 +26,9 @@
 			function getChannels(channel) {
 				var paths = [];
 
-				if ( channels.hasOwnProperty( channel ) ) {
-					paths.push( channel );
-				}
+				// if ( channels.hasOwnProperty( channel ) ) {
+				// 	paths.push( channels[channel] );
+				// }
 
 				var chanPath = channel.split('/')
 				// remove blank
@@ -120,7 +120,6 @@
 					len = subs.length;
 					params = (args.length > 1) ?
 							Array.prototype.splice.call(args, 1) : [];
-					params.push(args[0])
 					params.push(args[0].split('/'))
 
 					//run the callbacks asynchronously,
@@ -131,7 +130,9 @@
 							//in which they were registered
 							for (var chanIter = 0; chanIter < len; chanIter += 1) {
                                 for (var fnIter = 0; fnIter < subs[chanIter].length; fnIter++) {
-								    subs[chanIter][fnIter].apply(context, params);
+									if (subs[chanIter][fnIter]) {
+										subs[chanIter][fnIter].apply(context, params);
+									}
                                 }
 							}
 
