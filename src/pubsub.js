@@ -17,7 +17,6 @@
 	 * @private
 	 */
 	function init() {
-	// function init() {
 		//the channel subscription hash
 		var channels = {},
 			//help minification
@@ -122,9 +121,6 @@
 					params = (args.length > 1) ?
 							Array.prototype.splice.call(args, 1) : [];
 					params.push(args[0].split('/'))
-					if (params[0] === '') {
-						params.shift();
-					}
 
 					//run the callbacks asynchronously,
 					//do not block the main execution process
@@ -134,14 +130,15 @@
 							//in which they were registered
 							for (var chanIter = 0; chanIter < len; chanIter += 1) {
                                 for (var fnIter = 0; fnIter < subs[chanIter].length; fnIter++) {
-									if (subs[chanIter][fnIter].apply) {
-										subs[chanIter][fnIter].apply(context, params);
+									if (subs[chanIter][fnIter]) {
+										subs[chanIter][fnIter].apply(this, params);
 									}
                                 }
 							}
 
 							//clear references to allow garbage collection
-							subs = context = params = null;
+							subs = null;
+							params = null;
 						},
 						0
 					);
@@ -232,7 +229,7 @@
 	}
 
 	var PubSub = init();
-
+//
 // 	//UMD
 // 	if (typeof define === 'function' && define.amd) {
 // 		//AMD module
