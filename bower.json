@@ -16,5 +16,14 @@
     "pubsub",
     "microjs"
   ],
+  "ignore": [
+    "*.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "lib",
+    "spec"
+  ],
   "license": "MIT"
 }

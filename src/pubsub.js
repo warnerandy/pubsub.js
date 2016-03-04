@@ -10,13 +10,14 @@
  */
 
 /*global define, module*/
-(function (context) {
+// (function (context) {
 	'use strict';
 
 	/**
 	 * @private
 	 */
-	function init() {
+	function PubSub() {
+	// function init() {
 		//the channel subscription hash
 		var channels = {},
 			//help minification
@@ -79,7 +80,7 @@
 						}
 					}
 					if ( channels.hasOwnProperty( tmpPath ) ) {
-						paths.push( tmpPath )
+						paths.push( channels[tmpPath] )
 					}
 				}
 
@@ -121,6 +122,9 @@
 					params = (args.length > 1) ?
 							Array.prototype.splice.call(args, 1) : [];
 					params.push(args[0].split('/'))
+					if (params[0] === '') {
+						params.shift();
+					}
 
 					//run the callbacks asynchronously,
 					//do not block the main execution process
@@ -130,7 +134,7 @@
 							//in which they were registered
 							for (var chanIter = 0; chanIter < len; chanIter += 1) {
                                 for (var fnIter = 0; fnIter < subs[chanIter].length; fnIter++) {
-									if (subs[chanIter][fnIter]) {
+									if (subs[chanIter][fnIter].apply) {
 										subs[chanIter][fnIter].apply(context, params);
 									}
                                 }
@@ -227,15 +231,15 @@
 		};
 	}
 
-	//UMD
-	if (typeof define === 'function' && define.amd) {
-		//AMD module
-		define('pubsub', init);
-	} else if (typeof module === 'object' && module.exports) {
-		//CommonJS module
-		module.exports = init();
-	} else {
-		//traditional namespace
-		context.PubSub = init();
-	}
-}(this));
+// 	//UMD
+// 	if (typeof define === 'function' && define.amd) {
+// 		//AMD module
+// 		define('pubsub', init);
+// 	} else if (typeof module === 'object' && module.exports) {
+// 		//CommonJS module
+// 		module.exports = init();
+// 	} else {
+// 		//traditional namespace
+// 		context.PubSub = init();
+// 	}
+// }(this));
