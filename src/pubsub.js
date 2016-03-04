@@ -16,7 +16,7 @@
 	/**
 	 * @private
 	 */
-	function PubSub() {
+	function init() {
 	// function init() {
 		//the channel subscription hash
 		var channels = {},
@@ -230,6 +230,8 @@
 			}
 		};
 	}
+
+	var PubSub = init();
 
 // 	//UMD
 // 	if (typeof define === 'function' && define.amd) {
