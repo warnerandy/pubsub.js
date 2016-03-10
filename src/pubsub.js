@@ -10,7 +10,7 @@
  */
 
 /*global define, module*/
-// (function (context) {
+(function (context) {
 	'use strict';
 
 	/**
@@ -229,16 +229,16 @@
 	}
 
 	var PubSub = init();
-//
-// 	//UMD
-// 	if (typeof define === 'function' && define.amd) {
-// 		//AMD module
-// 		define('pubsub', init);
-// 	} else if (typeof module === 'object' && module.exports) {
-// 		//CommonJS module
-// 		module.exports = init();
-// 	} else {
-// 		//traditional namespace
-// 		context.PubSub = init();
+
+	//UMD
+	if (typeof define === 'function' && define.amd) {
+		//AMD module
+		define('pubsub', init);
+	} else if (typeof module === 'object' && module.exports) {
+		//CommonJS module
+		module.exports = init();
+	} else {
+		//traditional namespace
+		context.PubSub = init();
 // 	}
-// }(this));
+}(this));
