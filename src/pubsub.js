@@ -228,8 +228,6 @@
 		};
 	}
 
-	var PubSub = init();
-
 	//UMD
 	if (typeof define === 'function' && define.amd) {
 		//AMD module
